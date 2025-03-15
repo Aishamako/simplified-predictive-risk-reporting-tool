@@ -79,6 +79,6 @@ plt.ylabel("Count of Vulnerabilities")
 plt.title("Most Frequent CVE Categories (2020-2025)")
 plt.xticks(rotation=45)
 
-#  Save and Show Graph
+# Save and Show Graph
 plt.savefig("cve_categories_updated.png")
 plt.show()
