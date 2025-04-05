@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cybersecurity Threat Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>🛡️ Simplified Predictive Risk Reporting Tool</h1>
+        <p>Powered by AI Threat Classification</p>
+    </header>
+
+    <form method="POST" action="/">
+        <label for="text">Enter threat description:</label><br><br>
+        <textarea name="text" rows="5" placeholder="e.g. Hackers used SQL Injection on Apache servers"></textarea><br><br>
+
+        <label for="chart_type">Choose chart type:</label>
+        <select name="chart_type" id="chart_type">
+            <option value="bar">Bar Chart</option>
+            <option value="pie">Pie Chart</option>
+        </select><br><br>
+
+        <input type="submit" value="Analyze">
+    </form>
+
+    {% if entities %}
+        <h2 style="text-align:center;">🧠 Predicted Entities:</h2>
+        <div class="entity-container">
+            {% for ent, label in entities %}
+                <div class="entity-card {{ label }}">
+                    <span class="label-icon">🔖</span>
+                    <strong>{{ ent }}</strong>
+                    <span class="entity-type">{{ label }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if chart %}
+        <div class="chart-container">
+            <h2>📊 Risk Report Summary</h2>
+            <img src="{{ url_for('static', filename='chart.png') }}" alt="Entity Chart">
+            <a href="/export" class="export-button">⬇️ Export as .txt</a>
+            <a href="/export/pdf" class="export-button">📄 Export as PDF</a>
+        </div>
+    {% endif %}
+</body>
+</html>

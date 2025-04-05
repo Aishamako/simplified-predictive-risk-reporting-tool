@@ -1,0 +1,125 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #1e90ff;
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+
+header p {
+    font-size: 13px;
+    color: #666;
+}
+
+form {
+    max-width: 800px;
+    margin: 0 auto 20px;
+    padding: 16px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    min-height: 100px;
+}
+
+input[type="submit"] {
+    background-color: #1e90ff;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+input[type="submit"]:hover {
+    background-color: #0e70c0;
+}
+
+.entity-container,
+.chart-container {
+    max-width: 800px;
+    margin: 10px auto;
+    padding: 12px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.entity-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.entity-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border-left: 4px solid #1e90ff;
+}
+
+.label-icon {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.entity-type {
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* Color themes for labels */
+.VULNERABILITY .entity-type { background: #ff4d4f; color: white; }
+.ACTOR .entity-type { background: #1e90ff; color: white; }
+.EXPLOIT .entity-type { background: #ffa940; color: white; }
+.PRODUCT .entity-type { background: #52c41a; color: white; }
+.ATTACK_TYPE .entity-type { background: #9254de; color: white; }
+
+.chart-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.export-button {
+    display: inline-block;
+    margin-top: 15px;
+    background: #4CAF50;
+    color: white;
+    padding: 6px 14px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.export-button:hover {
+    background: #388e3c;
+}
