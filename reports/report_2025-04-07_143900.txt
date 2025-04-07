@@ -1,0 +1,9 @@
+📝 Threat Analysis Report
+📅 Timestamp: 2025-04-07_143900
+
+Original Text:
+SQL Injection was found in Apache
+
+Detected Entities:
+ - SQL Injection (VULNERABILITY)
+ - in (PRODUCT)

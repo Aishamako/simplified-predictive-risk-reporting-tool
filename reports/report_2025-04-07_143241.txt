@@ -1,0 +1,12 @@
+📝 Threat Analysis Report
+📅 Timestamp: 2025-04-07_143241
+
+Original Text:
+Hackers used SQL Injection and buffer overflow to attack Apache and Windows systems
+
+
+Detected Entities:
+ - Hackers (ACTOR)
+ - SQL Injection (VULNERABILITY)
+ - buffer overflow (EXPLOIT)
+ - Windows (PRODUCT)
