@@ -8,9 +8,10 @@
 <body>
     <header>
         <h1>🛡️ Simplified Predictive Risk Reporting Tool</h1>
-        <p>Powered by AI Threat Classification</p>
+        <p>Powered by AI & Real-Time Threat Intelligence</p>
     </header>
 
+    <!-- 🔎 Threat Description Input -->
     <form method="POST" action="/">
         <label for="text">Enter threat description:</label><br><br>
         <textarea name="text" rows="5" placeholder="e.g. Hackers used SQL Injection on Apache servers"></textarea><br><br>
@@ -24,6 +25,7 @@
         <input type="submit" value="Analyze">
     </form>
 
+    <!-- 🧠 NLP Entity Output -->
     {% if entities %}
         <h2 style="text-align:center;">🧠 Predicted Entities:</h2>
         <div class="entity-container">
@@ -37,6 +39,7 @@
         </div>
     {% endif %}
 
+    <!-- 📊 Chart Output -->
     {% if chart %}
         <div class="chart-container">
             <h2>📊 Risk Report Summary</h2>
@@ -45,5 +48,57 @@
             <a href="/export/pdf" class="export-button">📄 Export as PDF</a>
         </div>
     {% endif %}
+
+    <!-- 🌐 VirusTotal Domain Lookup -->
+    <hr>
+    <h2>🔍 Check Domain with VirusTotal</h2>
+    <form method="POST" action="/">
+        <input type="text" name="domain" placeholder="Enter domain (e.g. example.com)" required>
+        <button type="submit" name="vt_submit">Check Threat Status</button>
+    </form>
+
+    {% if vt_result %}
+        <div style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;">
+            <h3>🛡️ VirusTotal Scan Results</h3>
+            <p><strong>Domain:</strong> {{ vt_result.domain }}</p>
+            <p><strong>Categories:</strong> {{ vt_result.categories }}</p>
+            <p><strong>Last Analysis:</strong></p>
+            <ul>
+                {% for key, value in vt_result.analysis.items() %}
+                    <li>{{ key }}: {{ value }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- 🛰️ Shodan IP Lookup -->
+    <hr>
+    <h2>🌐 IP Exposure Check with Shodan</h2>
+    <form method="POST" action="/">
+        <input type="text" name="ip" placeholder="Enter IP address (e.g. 8.8.8.8)" required>
+        <button type="submit" name="shodan_submit">Run Shodan Lookup</button>
+    </form>
+
+    {% if shodan_result %}
+        <div class="shodan-result" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;">
+            <h3>📡 Shodan Results</h3>
+            <p><strong>IP:</strong> {{ shodan_result.ip }}</p>
+            <p><strong>Organization:</strong> {{ shodan_result.organization }}</p>
+            <p><strong>Operating System:</strong> {{ shodan_result.os or 'N/A' }}</p>
+            <p><strong>Ports:</strong> {{ shodan_result.ports | join(', ') }}</p>
+            {% if shodan_result.vulns %}
+                <p><strong>Vulnerabilities:</strong></p>
+                <ul>
+                    {% for vuln in shodan_result.vulns %}
+                        <li>{{ vuln }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p><strong>Vulnerabilities:</strong> None reported.</p>
+            {% endif %}
+        </div>
+    {% endif %}
 </body>
 </html>
+
+

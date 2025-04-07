@@ -1,0 +1,9 @@
+📝 Threat Analysis Report
+📅 Timestamp: 2025-04-07_154030
+
+Original Text:
+Buffer overflow in Windows was exploited 
+
+Detected Entities:
+ - Buffer overflow (EXPLOIT)
+ - Windows (PRODUCT)
