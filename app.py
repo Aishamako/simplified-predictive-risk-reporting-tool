@@ -22,6 +22,15 @@ REPORT_FOLDER = "reports"
 if not os.path.exists(REPORT_FOLDER):
     os.makedirs(REPORT_FOLDER)
 
+# 🛡️ Best practice recommendations based on entity labels
+RECOMMENDATIONS = {
+    "VULNERABILITY": "Apply vendor patches promptly and scan for known vulnerabilities regularly.",
+    "EXPLOIT": "Implement intrusion detection systems and monitor unusual behavior.",
+    "ACTOR": "Educate staff on social engineering and enforce strong access controls.",
+    "ATTACK_TYPE": "Use firewall rules and rate limiting to protect against attack vectors.",
+    "PRODUCT": "Ensure software is up-to-date and configured securely."
+}
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     entities = []
@@ -30,10 +39,10 @@ def index():
     report_name = ''
     vt_result = None
     shodan_result = None
+    recommendations = []
 
     if request.method == 'POST':
         if 'vt_submit' in request.form:
-            # ✅ VirusTotal lookup
             domain = request.form.get('domain')
             if domain:
                 with app.test_request_context(json={'domain': domain}):
@@ -48,7 +57,6 @@ def index():
                         }
 
         elif 'shodan_submit' in request.form:
-            # ✅ Shodan lookup
             ip = request.form.get('ip')
             if ip:
                 with app.test_request_context(json={'ip': ip}):
@@ -65,17 +73,25 @@ def index():
                         }
 
         else:
-            # ✅ NLP Threat classification
             text = request.form['text']
             chart_type = request.form.get('chart_type', 'bar')
 
             doc = nlp(text)
             entities = [(ent.text, ent.label_) for ent in doc.ents]
 
+            # 🧠 Generate recommendations
+            seen_labels = set()
+            for _, label in entities:
+                if label in RECOMMENDATIONS and label not in seen_labels:
+                    recommendations.append(RECOMMENDATIONS[label])
+                    seen_labels.add(label)
+
+            # 🧮 Count label types
             label_counts = {}
             for _, label in entities:
                 label_counts[label] = label_counts.get(label, 0) + 1
 
+            # 📊 Generate chart
             if label_counts:
                 plt.figure(figsize=(6, 4))
                 if chart_type == 'pie':
@@ -91,10 +107,13 @@ def index():
                 plt.savefig(chart_path)
                 plt.close()
 
+            # 📁 Save reports
             timestamp = datetime.now().strftime('%Y-%m-%d_%H%M%S')
             report_name = f"report_{timestamp}"
             txt_path = os.path.join(REPORT_FOLDER, f"{report_name}.txt")
+            pdf_path = os.path.join(REPORT_FOLDER, f"{report_name}.pdf")
 
+            # ✍️ Text Report
             with open(txt_path, "w") as f:
                 f.write("📝 Threat Analysis Report\n")
                 f.write(f"📅 Timestamp: {timestamp}\n\n")
@@ -102,9 +121,11 @@ def index():
                 f.write("Detected Entities:\n")
                 for ent, label in entities:
                     f.write(f" - {ent} ({label})\n")
+                f.write("\nRecommendations:\n")
+                for rec in recommendations:
+                    f.write(f" - {rec}\n")
 
-            # PDF export
-            pdf_path = os.path.join(REPORT_FOLDER, f"{report_name}.pdf")
+            # 📄 PDF Report
             c = canvas.Canvas(pdf_path, pagesize=letter)
             c.setFont("Helvetica-Bold", 14)
             c.drawString(50, 750, "📝 Threat Analysis Report")
@@ -124,6 +145,16 @@ def index():
                 if y < 80:
                     c.showPage()
                     y = 750
+            y -= 10
+            c.drawString(50, y, "Recommendations:")
+            y -= 15
+            for rec in recommendations:
+                for line in rec.split(". "):
+                    c.drawString(60, y, f"- {line.strip()}")
+                    y -= 12
+                    if y < 80:
+                        c.showPage()
+                        y = 750
             if chart_path and os.path.exists(chart_path):
                 c.showPage()
                 c.drawImage(chart_path, 100, 300, width=400, preserveAspectRatio=True, mask='auto')
@@ -162,6 +193,3 @@ def export_pdf():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
