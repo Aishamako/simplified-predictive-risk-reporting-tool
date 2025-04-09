@@ -10,7 +10,11 @@
         <h1>🛡️ Simplified Predictive Risk Reporting Tool</h1>
         <p>Powered by AI & Real-Time Threat Intelligence</p>
     </header>
-
+    
+    <p style="text-align:right;">
+        Logged in as {{ session['user'] }} | <a href="/logout">Logout</a>
+    </p>
+    
     <!-- 🔎 Threat Description Input -->
     <form method="POST" action="/">
         <label for="text">Enter threat description:</label><br><br>
