@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>📂 Report History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar sticky">
+        <h2>🛡️ Risk Reporting Tool - Report History</h2>
+    </nav>
+
+    <div class="container" style="max-width: 800px; margin: auto;">
+        <h1>📄 Report History</h1>
+        {% if reports %}
+            <ul style="list-style: none; padding: 0;">
+                {% for file in reports %}
+                    <li style="margin: 10px 0;">
+                        <a href="{{ url_for('static', filename='../reports/' + file) }}" target="_blank">📎 {{ file }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{{ url_for('dashboard') }}">⬅️ Back to Dashboard</a>
+        {% endif %}
+        </div>
+
+    <footer class="footer">
+        <p>📧 Contact: support@risktool.ai | 🌐 www.risktool.ai</p>
+        <p>&copy; 2025 Simplified Predictive Risk Reporting Tool. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+

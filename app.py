@@ -66,8 +66,8 @@ RECOMMENDATIONS = {
     "PRODUCT": "Ensure software is up-to-date and configured securely."
 }
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
+@app.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
     entities = []
     chart_path = None
     text = ''
@@ -199,6 +199,10 @@ def export_pdf():
             return send_file(path, as_attachment=True)
     return "⚠️ No PDF report available."
 
+@app.route('/', endpoint='home')
+def home():
+    return render_template('home.html')
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -221,6 +225,7 @@ def register():
         return redirect(url_for('login'))
     return render_template("register.html")
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -237,7 +242,7 @@ def login():
             if user == "marker@demo.com":
                 session['user'] = user
                 session['2fa_verified'] = True
-                return redirect(url_for("index"))
+                return redirect(("/dashboard"))
 
             # ✅ Step 3: Generate and store 2FA code
             code = str(random.randint(100000, 999999))
@@ -259,7 +264,7 @@ def verify_2fa():
     if request.method == 'POST':
         if request.form['code'] == session['2fa_code']:
             session['2fa_verified'] = True
-            return redirect(url_for('index'))
+            return redirect(url_for('dashboard'))
         return "⚠️ Invalid 2FA code."
     return render_template("verify_2fa.html", user=session['user'], code=session['2fa_code'])
 
@@ -270,13 +275,42 @@ def logout():
 
 @app.before_request
 def restrict_access():
-    allowed = ['login', 'register', 'verify_2fa', 'static']
-    if request.endpoint not in allowed and 'user' not in session:
+    # Routes that don’t need authentication
+    public_routes = ['login', 'register', 'verify_2fa', 'static', 'home', None]
+
+    # If accessing a public route, let it pass
+    if request.endpoint in public_routes:
+        return
+
+    # If user is not logged in
+    if 'user' not in session:
         return redirect(url_for('login'))
-    if request.endpoint not in allowed and not session.get('2fa_verified'):
+
+    # If user is logged in but not verified
+    if not session.get('2fa_verified'):
         return redirect(url_for('verify_2fa'))
+
+@app.route('/history')
+def history():
+    report_files = sorted(os.listdir(REPORT_FOLDER), reverse=True)
+    return render_template("history.html", reports=report_files)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
 
 

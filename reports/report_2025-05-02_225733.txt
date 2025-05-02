@@ -1,0 +1,15 @@
+📝 Threat Analysis Report
+📅 Timestamp: 2025-05-02_225733
+
+Original Text:
+Hackers used SQL Injection on Apache Servers 
+
+Detected Entities:
+ - Hackers (ACTOR)
+ - SQL Injection (VULNERABILITY)
+ - Apache (PRODUCT)
+
+Recommendations:
+ - Educate staff on social engineering and enforce strong access controls.
+ - Apply vendor patches promptly and scan for known vulnerabilities regularly.
+ - Ensure software is up-to-date and configured securely.

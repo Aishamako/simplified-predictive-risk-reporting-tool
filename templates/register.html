@@ -1,15 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register - Risk Reporting Tool</title>
+    <meta charset="UTF-8">
+    <title>Register | Risk Reporting Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-    <h2>🔐 Register</h2>
-    <form method="POST">
-        Username: <input type="text" name="username" required><br><br>
-        Password: <input type="password" name="password" required><br><br>
-        <input type="submit" value="Register">
-    </form>
-    <p>Already registered? <a href="{{ url_for('login') }}">Login here</a></p>
+<body class="auth-background">
+
+    <nav class="navbar">
+        <h2>🛡️ Risk Reporting Tool</h2>
+    </nav>
+
+    <div class="overlay-container">
+        <div class="form-container">
+            <h2>Create an Account</h2>
+            <form method="POST" action="/register">
+                <label for="username">Email or Username:</label>
+                <input type="text" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" name="password" required>
+
+                <button type="submit">Register</button>
+                <p>Already have an account? <a href="/login">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>📧 Contact: <a href="mailto:support@risktool.ai">support@risktool.ai</a> | 🌐 <a href="/">www.risktool.ai</a></p>
+            <div class="footer-links">
+                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('privacy') }}">Privacy</a>
+            </div>
+            
+            <p>&copy; 2025 Simplified Predictive Risk Reporting Tool. All rights reserved.</p>
+        </div>
+    </footer>
+    
 </body>
 </html>
+

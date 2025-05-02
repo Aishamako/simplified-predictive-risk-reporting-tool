@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome - Risk Reporting Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="home-background">
+    <div class="navbar">
+        <h2>🛡️ Risk Reporting Tool</h2>
+    </div>
+
+    <div class="container" style="background-color: rgba(255, 255, 255, 0.92); padding: 40px; border-radius: 12px; max-width: 700px; margin: 80px auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center;">
+        <h1 style="margin-bottom: 20px;">Welcome to the <span style="color:#1e90ff;">Simplified Predictive Risk Reporting Tool</span></h1>
+        <p style="font-size: 16px; margin-bottom: 30px;">
+            Analyze cybersecurity threats, visualize risks, and generate predictive reports — powered by AI.
+        </p>
+        <ul style="text-align: left; margin: 0 auto 30px; max-width: 500px; font-size: 15px; line-height: 1.6;">
+            <li>✔️ Fast AI-based threat scanning</li>
+            <li>✔️ Smart entity recognition for vulnerabilities</li>
+            <li>✔️ Visual summaries and exportable reports</li>
+        </ul>
+        
+        <a href="{{ url_for('login') }}" class="button" style="margin-right: 20px;">🔐 Login</a>
+        <a href="{{ url_for('register') }}" class="button secondary">📝 Register</a>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>📧 Contact: <a href="mailto:support@risktool.ai">support@risktool.ai</a> | 🌐 <a href="/">www.risktool.ai</a></p>
+            <div class="footer-links">
+                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('privacy') }}">Privacy</a>
+            </div>
+            
+            <p>&copy; 2025 Simplified Predictive Risk Reporting Tool. All rights reserved.</p>
+        </div>
+    </footer>
+    
+
+</body>
+</html>
